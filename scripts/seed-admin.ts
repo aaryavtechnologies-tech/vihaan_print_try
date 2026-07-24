@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { auth } from "../src/lib/auth";
 
 async function seedAdmin() {

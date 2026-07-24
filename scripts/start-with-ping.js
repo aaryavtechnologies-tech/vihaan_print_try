@@ -4,7 +4,7 @@ const path = require("path");
 console.log("🚀 Starting Next.js server with Render auto-ping background process...");
 
 // 1. Spawn ping.js process
-const pingProcess = spawn("node", [path.join(__dirname, "../ping.js")], {
+const pingProcess = spawn("node", [path.join(__dirname, "ping-render.js")], {
   stdio: "inherit",
   shell: true,
 });
