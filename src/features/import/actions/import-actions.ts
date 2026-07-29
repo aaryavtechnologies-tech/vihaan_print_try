@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { ImportStatus } from "@prisma/client";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { parseDate } from "@/lib/utils";
 
 export async function createImportJob(data: { schoolId: string; totalRecords: number; fileName: string; fileSize: number }) {
   try {
@@ -50,7 +51,7 @@ export async function importStudentChunk(jobId: string, chunkData: any[], school
           middleName: row.middleName || null,
           lastName: row.lastName || null,
           fullName: [row.firstName, row.middleName, row.lastName].filter(Boolean).join(" "),
-          dateOfBirth: row.dob ? new Date(row.dob) : null,
+          dateOfBirth: parseDate(row.dob),
           gender: row.gender || null,
           bloodGroup: row.bloodGroup || null,
           studentMobile: row.mobile || null,

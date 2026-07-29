@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { StudentStatus } from "@prisma/client";
+import { parseDate } from "@/lib/utils";
 
 export async function getStudents(schoolId?: string) {
   try {
@@ -114,7 +115,7 @@ export async function createStudent(data: any) {
         lastName: data.lastName ? data.lastName.toUpperCase() : null,
         fullName,
         gender: data.gender,
-        dateOfBirth: data.dob ? new Date(data.dob) : null,
+        dateOfBirth: parseDate(data.dob),
         
         className: data.className,
         section: data.section,
