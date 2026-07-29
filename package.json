@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "node scripts/start-with-ping.js",
+    "start:vps": "next start",
     "lint": "eslint",
     "ping": "node scripts/ping-render.js",
     "prepare": "husky",

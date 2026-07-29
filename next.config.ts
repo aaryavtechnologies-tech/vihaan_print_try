@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   experimental: {
     serverActions: {
       bodySizeLimit: '50mb',
-      allowedOrigins: ['my-app.onrender.com', '*.onrender.com'],
+      allowedOrigins: ['my-app.onrender.com', '*.onrender.com', 'vihaan.playvia.in'],
     },
   },
   images: {
