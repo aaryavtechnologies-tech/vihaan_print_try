@@ -7,8 +7,20 @@ const loadImage = (url: string): Promise<HTMLImageElement> => {
     const img = new Image();
     img.crossOrigin = 'Anonymous';
     img.onload = () => resolve(img);
-    img.onerror = (e) => reject(new Error(`Failed to load image: ${url}`));
-    img.src = url;
+    img.onerror = () => {
+      // Fallback: retry without CORS — the image may still render but canvas will be tainted
+      const fallbackImg = new Image();
+      fallbackImg.onload = () => resolve(fallbackImg);
+      fallbackImg.onerror = (e) => reject(new Error(`Failed to load image: ${url}`));
+      fallbackImg.src = url;
+    };
+    // Cache-bust external URLs to prevent Safari from serving a cached non-CORS response
+    if (url.startsWith('data:') || url.startsWith('/')) {
+      img.src = url;
+    } else {
+      const separator = url.includes('?') ? '&' : '?';
+      img.src = `${url}${separator}cors=1`;
+    }
   });
 };
 

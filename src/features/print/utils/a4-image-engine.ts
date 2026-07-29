@@ -6,14 +6,23 @@ const loadImage = (url: string): Promise<HTMLImageElement> => {
     const img = new Image();
     img.crossOrigin = 'Anonymous';
     img.onload = () => resolve(img);
-    img.onerror = (e) => reject(new Error(`Failed to load image: ${url}`));
+    img.onerror = () => {
+      // Fallback: retry without CORS — the image may still render but canvas will be tainted
+      const fallbackImg = new Image();
+      fallbackImg.onload = () => resolve(fallbackImg);
+      fallbackImg.onerror = (e) => reject(new Error(`Failed to load image: ${url}`));
+      fallbackImg.src = url;
+    };
     
     // For local dev, proxy might be needed to avoid canvas taint if images are cross-origin,
     // but Cloudinary allows anonymous cors. We'll add proxy just in case.
     if (url.startsWith('http')) {
-        img.src = `/api/proxy-download?url=${encodeURIComponent(url)}`;
+      // Cache-bust external URLs to prevent Safari from serving a cached non-CORS response
+      const proxyUrl = `/api/proxy-download?url=${encodeURIComponent(url)}`;
+      const separator = proxyUrl.includes('?') ? '&' : '?';
+      img.src = `${proxyUrl}${separator}cors=1`;
     } else {
-        img.src = url;
+      img.src = url;
     }
   });
 };

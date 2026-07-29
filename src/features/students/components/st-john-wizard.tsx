@@ -1,17 +1,15 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Save, Loader2, CreditCard } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Save, Loader2 } from "lucide-react";
 import { createStudent } from "../server/student-actions";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/ui/image-upload";
-import { format } from "date-fns";
 
 import { StJohnTemplatePreview, StudentCardData } from "./st-john-template-preview";
 import { Input } from "@/components/ui/input";
@@ -148,7 +146,7 @@ export function StJohnWizard({ schoolId = "STJOHN-9780" }: { schoolId?: string }
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">Date of Birth</h3>
-                  <p className="text-lg font-medium text-slate-800">{previewData.dob ? format(new Date(previewData.dob), "dd/MM/yyyy") : "-"}</p>
+                  <p className="text-lg font-medium text-slate-800">{previewData.dob ? String(previewData.dob) : "-"}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">Mobile Number</h3>

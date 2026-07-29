@@ -17,8 +17,20 @@ const AsyncImage = ({ url, ...props }: any) => {
     const img = new window.Image();
     img.crossOrigin = "Anonymous";
     img.onload = () => setImage(img);
-    img.onerror = () => setImage(null);
-    img.src = url;
+    img.onerror = () => {
+      // Fallback: retry without CORS if the cache-busted request also fails
+      const fallbackImg = new window.Image();
+      fallbackImg.onload = () => setImage(fallbackImg);
+      fallbackImg.onerror = () => setImage(null);
+      fallbackImg.src = url;
+    };
+    // Cache-bust external URLs to prevent Safari from serving a cached non-CORS response
+    if (url.startsWith("data:") || url.startsWith("/")) {
+      img.src = url;
+    } else {
+      const separator = url.includes("?") ? "&" : "?";
+      img.src = `${url}${separator}cors=1`;
+    }
   }, [url]);
 
   if (!image) return null; 
