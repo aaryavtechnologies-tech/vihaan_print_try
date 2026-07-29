@@ -6,7 +6,7 @@ module.exports = {
       args: 'run start:vps',
       env: {
         NODE_ENV: 'production',
-        PORT: 3000
+        PORT: 5030
       },
     },
   ],

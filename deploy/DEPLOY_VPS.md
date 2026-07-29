@@ -52,7 +52,7 @@ pm2 startup
 
 ## Step 4: Configure Nginx as a Reverse Proxy
 
-Nginx will route traffic from your domain `vihaan.playvia.in` to the local Node.js server running on port 3000.
+Nginx will route traffic from your domain `vihaan.playvia.in` to the local Node.js server running on port 5030.
 
 ```bash
 # Install Nginx
