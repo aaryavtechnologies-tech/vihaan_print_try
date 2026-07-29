@@ -1,6 +1,6 @@
 const https = require("https");
 
-const RENDER_URL = process.env.RENDER_URL || "https://vihaan-print.onrender.com/api/ping";
+const RENDER_URL = process.env.RENDER_URL || "https://vihaan-print-try.onrender.com/api/ping";
 const INTERVAL_MS = (parseInt(process.env.PING_INTERVAL_MINUTES || "5", 10)) * 60 * 1000;
 
 function pingServer() {
